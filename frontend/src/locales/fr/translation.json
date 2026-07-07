@@ -1,0 +1,9 @@
+{
+    "welcome": "Bienvenue sur la plateforme Campus Tchad",
+    "login": "Se connecter",
+    "register": "S'inscrire",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "university_select": "Sélectionnez l'université (Optionnel)",
+    "no_school_required": "Vous pouvez utiliser le système sans spécifier d'école."
+  }
