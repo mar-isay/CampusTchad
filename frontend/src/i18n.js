@@ -56,13 +56,21 @@ const resources = {
       chat_desc: "Öğrenciler arasında özel mesajlaşma ve toplu grup sohbetleri.",
       feedback_placeholder: "Bize bir yorum, soru veya fikir bırakın...",
 
-      // Yasal ve İletişim İçerikleri
       terms_title: "Kullanım Koşulları",
       terms_text: "EduTchad platformuna hoş geldiniz. Bu sistemi kullanarak, paylaştığınız dökümanların ve akademik notların yasal sorumluluğunun size ait olduğunu, diğer kullanıcılara saygılı davranacağınızı ve sistemi ticari çıkarlar için kötüye kullanmayacağınızı kabul etmiş sayılırsınız.",
       privacy_title: "Gizlilik ve KVKK",
       privacy_text: "EduTchad, gizliliğinize önem verir. Kayıt esnasında girdiğiniz ad, e-posta ve üniversite bilgileri sadece akademik gelişim süreçlerinizi optimize etmek amacıyla güvenli sunucularda saklanır ve üçüncü taraflarla asla paylaşılmaz.",
+      
+      // İletişim Modal Başlıkları (TR)
       contact_title: "İletişim Bilgileri",
-      dept: "Bilgisayar Mühendisliği"
+      contact_name: "İsim",
+      contact_institution: "Kurum",
+      contact_dept: "Bölüm",
+      contact_phone: "Telefon",
+      contact_email: "E-posta",
+      contact_address: "Adres",
+      dept: "Bilgisayar Mühendisliği",
+      uni_name: "Necmettin Erbakan Üniversitesi"
     }
   },
   en: {
@@ -123,8 +131,17 @@ const resources = {
       terms_text: "Welcome to EduTchad. By using this system, you agree that you are legally responsible for the notes and documents you upload, that you will respect other users, and that you will not abuse the service for commercial purposes.",
       privacy_title: "Privacy Policy",
       privacy_text: "EduTchad values your privacy. Your name, email, and university info provided during registration are securely stored to enhance your academic workflow and are never shared with third parties.",
+      
+      // İletişim Modal Başlıkları (EN)
       contact_title: "Contact Information",
-      dept: "Computer Engineering"
+      contact_name: "Name",
+      contact_institution: "Institution",
+      contact_dept: "Department",
+      contact_phone: "Phone",
+      contact_email: "Email",
+      contact_address: "Address",
+      dept: "Computer Engineering",
+      uni_name: "Necmettin Erbakan University"
     }
   },
   fr: {
@@ -185,8 +202,17 @@ const resources = {
       terms_text: "Bienvenue sur EduTchad. En utilisant cette plateforme, vous acceptez que vous êtes légalement responsable des documents importés, que vous respecterez les autres utilisateurs, et que vous n'abuserez pas du service à des fins commerciales.",
       privacy_title: "Confidentialité",
       privacy_text: "EduTchad respecte votre vie privée. Votre nom, e-mail et informations universitaires fournis sont stockés en toute sécurité pour optimiser votre flux académique et ne sont jamais partagés.",
+      
+      // İletişim Modal Başlıkları (FR)
       contact_title: "Informations de Contact",
-      dept: "Génie Informatique"
+      contact_name: "Nom",
+      contact_institution: "Institution",
+      contact_dept: "Département",
+      contact_phone: "Téléphone",
+      contact_email: "E-mail",
+      contact_address: "Adresse",
+      dept: "Génie Informatique",
+      uni_name: "Université Necmettin Erbakan"
     }
   },
   ar: {
@@ -247,8 +273,17 @@ const resources = {
       terms_text: "مرحبًا بك في EduTchad. باستخدام هذا النظام، فإنك توافق على أنك مسؤول قانونيًا عن الملاحظات والمستندات التي تقوم برفعها، وأنك ستحترم المستخدمين الآخرين.",
       privacy_title: "سياسة الخصوصية",
       privacy_text: "تهتم EduTchad بخصوصيتك. يتم تخزين اسمك وبريدك الإلكتروني ومعلوماتك الجامعية بأمان لتحسين سير عملك الأكاديمي ولا يتم مشاركتها مطلقًا.",
+      
+      // İletişim Modal Başlıkları (AR)
       contact_title: "معلومات الاتصال",
-      dept: "هندسة الكمبيوتر"
+      contact_name: "الاسم",
+      contact_institution: "المؤسسة",
+      contact_dept: "القسم",
+      contact_phone: "الهاتف",
+      contact_email: "البريد الإلكتروني",
+      contact_address: "العنوان",
+      dept: "هندسة الكمبيوتر",
+      uni_name: "جامعة نجم الدين أربكان"
     }
   }
 };

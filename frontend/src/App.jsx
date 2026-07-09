@@ -16,7 +16,15 @@ const SvgIcons = {
   Upload: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" style={{ flexShrink: 0 }}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>,
   Archive: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" style={{ flexShrink: 0 }}><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/></svg>,
   Pdf: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" style={{ flexShrink: 0 }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>,
-  Chat: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" style={{ flexShrink: 0 }}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  Chat: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" style={{ flexShrink: 0 }}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
+  
+  // Yeni İletişim İkonları
+  ContactUser: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2" style={{ flexShrink: 0, marginRight: '6px', marginLeft: '6px' }}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
+  ContactSchool: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2" style={{ flexShrink: 0, marginRight: '6px', marginLeft: '6px' }}><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>,
+  ContactDept: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2" style={{ flexShrink: 0, marginRight: '6px', marginLeft: '6px' }}><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
+  ContactPhone: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2" style={{ flexShrink: 0, marginRight: '6px', marginLeft: '6px' }}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>,
+  ContactMail: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2" style={{ flexShrink: 0, marginRight: '6px', marginLeft: '6px' }}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
+  ContactMap: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2" style={{ flexShrink: 0, marginRight: '6px', marginLeft: '6px' }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
 };
 
 function App() {
@@ -391,7 +399,7 @@ function App() {
       {/* 6. DİNAMİK YASAL VE GERÇEK İLETİŞİM BİLGİLERİ MODAL SİSTEMİ */}
       {activeModal && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-          <div style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, padding: '30px', borderRadius: '16px', width: '460px', textAlign: 'left', boxSizing: 'border-box' }}>
+          <div style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, padding: '30px', borderRadius: '16px', width: '460px', textAlign: appDirection === 'rtl' ? 'right' : 'left', boxSizing: 'border-box' }}>
             
             {activeModal === 'terms' && (
               <>
@@ -409,13 +417,40 @@ function App() {
 
             {activeModal === 'contact' && (
               <>
-                <h3 style={{ margin: '0 0 20px 0', color: theme.textMain }}>📞 {t('contact_title')}</h3>
-                <div style={{ display: 'grid', gap: '12px', fontSize: '14px' }}>
-                  <div><strong style={{ color: '#38bdf8' }}>İsim:</strong> Issa Abakar Mahamat</div>
-                  <div><strong style={{ color: '#38bdf8' }}>Kurum:</strong> Necmettin Erbakan Üniversitesi</div>
-                  <div><strong style={{ color: '#38bdf8' }}>Bölüm:</strong> {t('dept')}</div>
-                  <div><strong style={{ color: '#38bdf8' }}>Telefon:</strong> +90 501 140 57 73</div>
-                  <div><strong style={{ color: '#38bdf8' }}>Adres:</strong> Hüsamettin Çelebi, Tahran Cd. No:85, 42100 Selçuklu/Konya</div>
+                <h3 style={{ margin: '0 0 20px 0', color: theme.textMain, textAlign: 'center' }}>📞 {t('contact_title')}</h3>
+                <div style={{ display: 'grid', gap: '16px', fontSize: '14.5px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <SvgIcons.ContactUser />
+                    <strong style={{ color: '#38bdf8' }}>{t('contact_name')}:</strong>
+                    <span style={{ marginLeft: '6px', marginRight: '6px' }}>Issa Abakar Mahamat</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <SvgIcons.ContactSchool />
+                    <strong style={{ color: '#38bdf8' }}>{t('contact_institution')}:</strong>
+                    <span style={{ marginLeft: '6px', marginRight: '6px' }}>{t('uni_name')}</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <SvgIcons.ContactDept />
+                    <strong style={{ color: '#38bdf8' }}>{t('contact_dept')}:</strong>
+                    <span style={{ marginLeft: '6px', marginRight: '6px' }}>{t('dept')}</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <SvgIcons.ContactPhone />
+                    <strong style={{ color: '#38bdf8' }}>{t('contact_phone')}:</strong>
+                    <span style={{ marginLeft: '6px', marginRight: '6px', direction: 'ltr' }}>+90 501 140 57 73</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <SvgIcons.ContactMail />
+                    <strong style={{ color: '#38bdf8' }}>{t('contact_email')}:</strong>
+                    <span style={{ marginLeft: '6px', marginRight: '6px' }}>edutchad26@gmail.com</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '4px' }}>
+                    <SvgIcons.ContactMap />
+                    <div>
+                      <strong style={{ color: '#38bdf8' }}>{t('contact_address')}:</strong>
+                      <span style={{ display: 'block', marginTop: '4px' }}>Hüsamettin Çelebi, Tahran Cd. No:85, 42100 Selçuklu/Konya</span>
+                    </div>
+                  </div>
                 </div>
               </>
             )}
