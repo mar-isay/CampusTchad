@@ -54,7 +54,15 @@ const resources = {
       pdfs_desc: "Kampüs genelinde paylaşılan doğrulanmış dökümanlara göz at.",
       chat: "Sohbet",
       chat_desc: "Öğrenciler arasında özel mesajlaşma ve toplu grup sohbetleri.",
-      feedback_placeholder: "Bize bir yorum, soru veya fikir bırakın..."
+      feedback_placeholder: "Bize bir yorum, soru veya fikir bırakın...",
+
+      // Yasal ve İletişim İçerikleri
+      terms_title: "Kullanım Koşulları",
+      terms_text: "EduTchad platformuna hoş geldiniz. Bu sistemi kullanarak, paylaştığınız dökümanların ve akademik notların yasal sorumluluğunun size ait olduğunu, diğer kullanıcılara saygılı davranacağınızı ve sistemi ticari çıkarlar için kötüye kullanmayacağınızı kabul etmiş sayılırsınız.",
+      privacy_title: "Gizlilik ve KVKK",
+      privacy_text: "EduTchad, gizliliğinize önem verir. Kayıt esnasında girdiğiniz ad, e-posta ve üniversite bilgileri sadece akademik gelişim süreçlerinizi optimize etmek amacıyla güvenli sunucularda saklanır ve üçüncü taraflarla asla paylaşılmaz.",
+      contact_title: "İletişim Bilgileri",
+      dept: "Bilgisayar Mühendisliği"
     }
   },
   en: {
@@ -109,7 +117,14 @@ const resources = {
       pdfs_desc: "Browse through verified PDF documents shared campus-wide.",
       chat: "Chat",
       chat_desc: "Private direct messaging and collaborative study chats.",
-      feedback_placeholder: "Leave us a comment, question or idea..."
+      feedback_placeholder: "Leave us a comment, question or idea...",
+
+      terms_title: "Terms of Use",
+      terms_text: "Welcome to EduTchad. By using this system, you agree that you are legally responsible for the notes and documents you upload, that you will respect other users, and that you will not abuse the service for commercial purposes.",
+      privacy_title: "Privacy Policy",
+      privacy_text: "EduTchad values your privacy. Your name, email, and university info provided during registration are securely stored to enhance your academic workflow and are never shared with third parties.",
+      contact_title: "Contact Information",
+      dept: "Computer Engineering"
     }
   },
   fr: {
@@ -164,7 +179,14 @@ const resources = {
       pdfs_desc: "Explorez tous les documents PDF vérifiés partagés sur le campus.",
       chat: "Discussion",
       chat_desc: "Messagerie privée et salons de discussion de groupe d'étude.",
-      feedback_placeholder: "Laissez-nous un commentaire, une question ou une idée..."
+      feedback_placeholder: "Laissez-nous un commentaire, une question ou une idée...",
+
+      terms_title: "Conditions d'Utilisation",
+      terms_text: "Bienvenue sur EduTchad. En utilisant cette plateforme, vous acceptez que vous êtes légalement responsable des documents importés, que vous respecterez les autres utilisateurs, et que vous n'abuserez pas du service à des fins commerciales.",
+      privacy_title: "Confidentialité",
+      privacy_text: "EduTchad respecte votre vie privée. Votre nom, e-mail et informations universitaires fournis sont stockés en toute sécurité pour optimiser votre flux académique et ne sont jamais partagés.",
+      contact_title: "Informations de Contact",
+      dept: "Génie Informatique"
     }
   },
   ar: {
@@ -219,7 +241,14 @@ const resources = {
       pdfs_desc: "تصفح جميع مستندات PDF المعتمدة والمشتركة على مستوى الحرم الجامعي.",
       chat: "المحادثة",
       chat_desc: "الرسائل المباشرة الخاصة بين الطلاب والمحادثات الجماعية للدراسة.",
-      feedback_placeholder: "اترك لنا تعليقًا أو سؤالاً أو فكرة..."
+      feedback_placeholder: "اترك لنا تعليقًا أو سؤالاً أو فكرة...",
+
+      terms_title: "شروط الاستخدام",
+      terms_text: "مرحبًا بك في EduTchad. باستخدام هذا النظام، فإنك توافق على أنك مسؤول قانونيًا عن الملاحظات والمستندات التي تقوم برفعها، وأنك ستحترم المستخدمين الآخرين.",
+      privacy_title: "سياسة الخصوصية",
+      privacy_text: "تهتم EduTchad بخصوصيتك. يتم تخزين اسمك وبريدك الإلكتروني ومعلوماتك الجامعية بأمان لتحسين سير عملك الأكاديمي ولا يتم مشاركتها مطلقًا.",
+      contact_title: "معلومات الاتصال",
+      dept: "هندسة الكمبيوتر"
     }
   }
 };

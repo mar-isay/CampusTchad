@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-// Kurumsal Standartlarda Çizgisel SVG Simge Seti
 const SvgIcons = {
   Assistant: () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
@@ -27,6 +26,9 @@ function App() {
   const [isDark, setIsDark] = useState(true);
   const [showProfile, setShowProfile] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  
+  // Alt Menü Tıklamaları İçin Durum Yönetimi (Modallar)
+  const [activeModal, setActiveModal] = useState(null); // 'terms', 'privacy', 'contact'
   const [robotChecked, setRobotChecked] = useState(false);
 
   const changeLanguage = (lng) => { i18n.changeLanguage(lng); };
@@ -136,7 +138,7 @@ function App() {
               </p>
             </div>
 
-            {/* BÖLÜM 1: 🤖 YAPAY ZEKA DESTEKLİ */}
+            {/* BÖLÜM 1: YAPAY ZEKA DESTEKLİ */}
             <div style={{ marginTop: '55px', position: 'relative', textAlign: 'left' }}>
               <div style={{ display: 'flex', alignItems: 'center', width: '100%', direction: appDirection, gap: '15px', marginBottom: '20px' }}>
                 <span style={{ color: isDark ? '#ffffff' : '#0f172a', fontWeight: '800', fontSize: '14.5px', letterSpacing: '0.5px', flexShrink: 0, textTransform: 'uppercase' }}>
@@ -196,7 +198,7 @@ function App() {
               </div>
             </div>
 
-            {/* BÖLÜM 2: 🎓 ÖĞRENCİ MERKEZİ */}
+            {/* BÖLÜM 2: ÖĞRENCİ MERKEZİ */}
             <div style={{ marginTop: '55px', position: 'relative', textAlign: 'left' }}>
               <div style={{ display: 'flex', alignItems: 'center', width: '100%', direction: appDirection, gap: '15px', marginBottom: '20px' }}>
                 <span style={{ color: isDark ? '#ffffff' : '#0f172a', fontWeight: '800', fontSize: '14.5px', letterSpacing: '0.5px', flexShrink: 0, textTransform: 'uppercase' }}>
@@ -332,7 +334,7 @@ function App() {
         )}
       </main>
 
-      {/* 3. KURUMSAL ALTTAN SAGA SOLA YAYILAN FOOTER */}
+      {/* 3. GERÇEK SOSYAL MEDYA LİNKLERİ İLE FOOTER */}
       <footer style={{ backgroundColor: theme.navBg, borderTop: `1px solid ${theme.border}`, padding: '40px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', width: '100%', boxSizing: 'border-box', marginTop: '100px' }}>
         
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '6px' }}>
@@ -348,31 +350,31 @@ function App() {
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '12px' }}>
           <div style={{ display: 'flex', gap: '12px', color: theme.textMuted, fontSize: '14px', fontWeight: '500' }}>
-            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>{t('terms')}</a>
+            <span onClick={() => setActiveModal('terms')} style={{ cursor: 'pointer' }}>{t('terms')}</span>
             <span>|</span>
-            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>{t('privacy')}</a>
+            <span onClick={() => setActiveModal('privacy')} style={{ cursor: 'pointer' }}>{t('privacy')}</span>
             <span>|</span>
-            <span onClick={() => setShowFeedbackModal(true)} style={{ color: 'inherit', textDecoration: 'none', cursor: 'pointer' }}>{t('contact_us')}</span>
+            <span onClick={() => setActiveModal('contact')} style={{ cursor: 'pointer' }}>{t('contact_us')}</span>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             <span style={{ fontSize: '12px', color: theme.textMuted, fontWeight: 'bold' }}>{t('social_media')}:</span>
-            <a href="https://facebook.com" target="_blank" style={{ color: theme.textMuted }}><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/></svg></a>
-            <a href="https://x.com" target="_blank" style={{ color: theme.textMuted }}><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-            <a href="https://instagram.com" target="_blank" style={{ color: theme.textMuted }}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-            <a href="https://linkedin.com" target="_blank" style={{ color: theme.textMuted }}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+            <a href="https://www.facebook.com/share/1F5UKFDWDw/?mibextid=wwXIfr" target="_blank" rel="noreferrer" style={{ color: theme.textMuted }}><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/></svg></a>
+            <a href="https://x.com/mhtissa6223?s=11" target="_blank" rel="noreferrer" style={{ color: theme.textMuted }}><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            <a href="https://www.instagram.com/mar_isay_?igsh=czJqMWQ2bGdkYm1z&utm_source=qr" target="_blank" rel="noreferrer" style={{ color: theme.textMuted }}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+            <a href="https://www.linkedin.com/in/issa-abakar-mahamat-568695349?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noreferrer" style={{ color: theme.textMuted }}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
           </div>
         </div>
       </footer>
 
-      {/* 4. SABİT GÖRÜŞ/LAMBA BUTONU */}
+      {/* 4. SABİT GÖRÜŞ LAMBASI */}
       <div style={{ position: 'fixed', bottom: '40px', [appDirection === 'rtl' ? 'left' : 'right']: '40px', zIndex: 100 }}>
         <button onClick={() => setShowFeedbackModal(true)} style={{ width: '54px', height: '54px', borderRadius: '50%', backgroundColor: '#eab308', color: '#000000', border: 'none', cursor: 'pointer', boxShadow: '0 4px 20px rgba(234, 179, 8, 0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px' }}>
           💡
         </button>
       </div>
 
-      {/* SOHBET / GÖRÜŞ PENCERESİ */}
+      {/* 5. GÖRÜŞ SOHBET MODAL PENCERESI */}
       {showFeedbackModal && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
           <div style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, padding: '30px', borderRadius: '16px', width: '400px', textAlign: appDirection === 'rtl' ? 'right' : 'left', boxSizing: 'border-box' }}>
@@ -382,6 +384,45 @@ function App() {
               <button onClick={() => setShowFeedbackModal(false)} style={{ flex: 1, padding: '10px', backgroundColor: theme.iconBg, color: theme.textMain, border: 'none', borderRadius: '6px', cursor: 'pointer' }}>{t('close')}</button>
               <button onClick={() => setShowFeedbackModal(false)} style={{ flex: 1, padding: '10px', backgroundColor: '#eab308', color: '#000', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}>{t('send')}</button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* 6. DİNAMİK YASAL VE GERÇEK İLETİŞİM BİLGİLERİ MODAL SİSTEMİ */}
+      {activeModal && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+          <div style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, padding: '30px', borderRadius: '16px', width: '460px', textAlign: 'left', boxSizing: 'border-box' }}>
+            
+            {activeModal === 'terms' && (
+              <>
+                <h3 style={{ margin: '0 0 15px 0', color: theme.textMain }}>📄 {t('terms_title')}</h3>
+                <p style={{ color: theme.textMuted, fontSize: '14px', lineHeight: '1.6' }}>{t('terms_text')}</p>
+              </>
+            )}
+
+            {activeModal === 'privacy' && (
+              <>
+                <h3 style={{ margin: '0 0 15px 0', color: theme.textMain }}>🔒 {t('privacy_title')}</h3>
+                <p style={{ color: theme.textMuted, fontSize: '14px', lineHeight: '1.6' }}>{t('privacy_text')}</p>
+              </>
+            )}
+
+            {activeModal === 'contact' && (
+              <>
+                <h3 style={{ margin: '0 0 20px 0', color: theme.textMain }}>📞 {t('contact_title')}</h3>
+                <div style={{ display: 'grid', gap: '12px', fontSize: '14px' }}>
+                  <div><strong style={{ color: '#38bdf8' }}>İsim:</strong> Issa Abakar Mahamat</div>
+                  <div><strong style={{ color: '#38bdf8' }}>Kurum:</strong> Necmettin Erbakan Üniversitesi</div>
+                  <div><strong style={{ color: '#38bdf8' }}>Bölüm:</strong> {t('dept')}</div>
+                  <div><strong style={{ color: '#38bdf8' }}>Telefon:</strong> +90 501 140 57 73</div>
+                  <div><strong style={{ color: '#38bdf8' }}>Adres:</strong> Hüsamettin Çelebi, Tahran Cd. No:85, 42100 Selçuklu/Konya</div>
+                </div>
+              </>
+            )}
+
+            <button onClick={() => setActiveModal(null)} style={{ width: '100%', padding: '12px', backgroundColor: theme.primary, color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', marginTop: '25px' }}>
+              {t('close')}
+            </button>
           </div>
         </div>
       )}
