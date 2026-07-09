@@ -1,24 +1,236 @@
-import i18n from 'i18n';
+import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import translationTR from './locales/tr/translation.json';
-import translationFR from './locales/fr/translation.json';
-import translationAR from './locales/ar/translation.json';
 
 const resources = {
-  tr: { translation: translationTR },
-  fr: { translation: translationFR },
-  ar: { translation: translationAR }
+  tr: {
+    translation: {
+      welcome: "EduTchad Platformuna Hoş Geldiniz",
+      slogan: "Çad'daki eğitim topluluğuna katılın, notlarınızı paylaşın ve bağlantıda kalın.",
+      login: "Giriş Yap",
+      register: "Kayıt Ol",
+      email: "E-posta Adresi",
+      password: "Şifre",
+      fullname: "Ad Soyad",
+      forgot_password: "Şifremi Unuttum",
+      not_robot: "Ben robot değilim",
+      google_login: "Google ile Giriş Yap",
+      no_account: "Hesabınız yok mu?",
+      have_account: "Zaten hesabınız var mı?",
+      university_select: "Üniversite Seçiniz (İsteğe Bağlı)",
+      no_school_required: "Okul belirtmeden de sistemi kullanabilirsiniz.",
+      profile: "Profil",
+      guest: "Misafir Kullanıcı",
+      not_logged_in: "Lütfen giriş yapın veya kayıt olun.",
+      terms: "Kullanım Koşulları",
+      privacy: "Gizlilik ve KVKK",
+      contact_us: "Bize Ulaşın",
+      back_home: "Ana Sayfaya Dön",
+      tagline: "⚡ GELECEĞİN EĞİTİM EKOSİSTEMİ",
+      ai_center: "YAPAY ZEKA DESTEKLİ",
+      student_center: "ÖĞRENCİ MERKEZİ",
+      sub_branding: "Yapay Zeka Destekli Akademik Gelişim Platformu",
+      close: "Kapat",
+      send: "Gönder",
+      social_media: "Sosyal Medya",
+      
+      ai_assistant: "AI Ders Asistanı",
+      ai_assistant_desc: "Derslerinle alakalı takıldığın tüm soruları yapay zekaya sor.",
+      pdf_analysis: "PDF Analizi",
+      pdf_analysis_desc: "Uzun ders dökümanlarını yükle, yapay zeka saniyeler içinde özetlesin.",
+      question_solver: "Soru Çözme",
+      question_solver_desc: "Sorunun fotoğrafını yükle, adım adım çözümü gör.",
+      text_editing: "Metin Düzenleme",
+      text_editing_desc: "Makale veya ödev metinlerini standartlara göre optimize et.",
+      study_coach: "Çalışma Koçu",
+      study_coach_desc: "Sana özel haftalık çalışma planı ve motivasyon üretir.",
+      voice_ai: "Sesli AI",
+      voice_ai_desc: "Yapay zeka ile konuşarak sesli ders tekrarı yap.",
+      
+      upload_note: "Not Yükle",
+      upload_note_desc: "Aldığın ders notlarını sisteme yükleyerek arkadaşlarınla paylaş.",
+      personal_archive: "Kişisel Arşiv",
+      personal_archive_desc: "Yüklediğin dökümanları güvenli bir klasörde sakla.",
+      pdfs: "PDF'ler",
+      pdfs_desc: "Kampüs genelinde paylaşılan doğrulanmış dökümanlara göz at.",
+      chat: "Sohbet",
+      chat_desc: "Öğrenciler arasında özel mesajlaşma ve toplu grup sohbetleri.",
+      feedback_placeholder: "Bize bir yorum, soru veya fikir bırakın..."
+    }
+  },
+  en: {
+    translation: {
+      welcome: "Welcome to EduTchad Platform",
+      slogan: "Join the educational community in Chad, share your notes, and stay connected.",
+      login: "Login",
+      register: "Register",
+      email: "Email Address",
+      password: "Password",
+      fullname: "Full Name",
+      forgot_password: "Forgot Password?",
+      not_robot: "I'm not a robot",
+      google_login: "Sign in with Google",
+      no_account: "Don't have an account?",
+      have_account: "Already have an account?",
+      university_select: "Select University (Optional)",
+      no_school_required: "You can use the system without specifying a school.",
+      profile: "Profile",
+      guest: "Guest User",
+      not_logged_in: "Please login or register.",
+      terms: "Terms of Use",
+      privacy: "Privacy Policy",
+      contact_us: "Contact Us",
+      back_home: "Back to Home",
+      tagline: "NEXT-GEN CAMPUS ECOSYSTEM",
+      ai_center: "AI-POWERED",
+      student_center: "STUDENT CENTER",
+      sub_branding: "AI-Powered Academic Development Platform",
+      close: "Close",
+      send: "Send",
+      social_media: "Social Media",
+      
+      ai_assistant: "AI Course Assistant",
+      ai_assistant_desc: "Ask AI any questions regarding your courses.",
+      pdf_analysis: "PDF Analysis",
+      pdf_analysis_desc: "Upload lecture documents and get smart summaries.",
+      question_solver: "Question Solver",
+      question_solver_desc: "Upload a picture of a problem and see step-by-step solutions.",
+      text_editing: "Text Editing",
+      text_editing_desc: "Optimize your essays according to academic standards.",
+      study_coach: "Study Coach",
+      study_coach_desc: "Generates custom weekly study paths and trackers.",
+      voice_ai: "Voice AI",
+      voice_ai_desc: "Practice and revise your courses by talking with AI.",
+      
+      upload_note: "Upload Note",
+      upload_note_desc: "Upload your course notes and share them with classmates.",
+      personal_archive: "Personal Archive",
+      personal_archive_desc: "Keep all your uploaded documents in one secure place.",
+      pdfs: "PDFs",
+      pdfs_desc: "Browse through verified PDF documents shared campus-wide.",
+      chat: "Chat",
+      chat_desc: "Private direct messaging and collaborative study chats.",
+      feedback_placeholder: "Leave us a comment, question or idea..."
+    }
+  },
+  fr: {
+    translation: {
+      welcome: "Bienvenue sur la plateforme EduTchad",
+      slogan: "Rejoignez la communauté éducative au Tchad, partagez vos notes et restez connectés.",
+      login: "Se connecter",
+      register: "S'inscrire",
+      email: "Adresse e-mail",
+      password: "Mot de passe",
+      fullname: "Nom Complet",
+      forgot_password: "Mot de passe oublié ?",
+      not_robot: "Je ne suis pas un robot",
+      google_login: "Se connecter avec Google",
+      no_account: "Vous n'avez pas de compte ?",
+      have_account: "Vous avez déjà un compte ?",
+      university_select: "Sélectionnez l'université (Optionnel)",
+      no_school_required: "Vous pouvez utiliser le système sans spécifier d'école.",
+      profile: "Profil",
+      guest: "Utilisateur Invité",
+      not_logged_in: "Veuillez vous connecter.",
+      terms: "Conditions d'utilisation",
+      privacy: "Confidentialité",
+      contact_us: "Nous Contacter",
+      back_home: "Retour à l'accueil",
+      tagline: "⚡ ÉCOSYSTÈME ÉDUCATIF DU FUTUR",
+      ai_center: "ASSISTÉ PAR IA",
+      student_center: "CENTRE ÉTUDIANT",
+      sub_branding: "Plateforme de Développement Académique Propulsée par l'IA",
+      close: "Fermer",
+      send: "Envoyer",
+      social_media: "Réseaux Sociaux",
+      
+      ai_assistant: "Assistant de Cours IA",
+      ai_assistant_desc: "Posez toutes vos questions académiques à l'IA.",
+      pdf_analysis: "Analyse PDF",
+      pdf_analysis_desc: "Téléchargez de longs documents de cours pour obtenir des résumés.",
+      question_solver: "Résolveur de Questions",
+      question_solver_desc: "Prenez une photo d'un exercice et obtenez une solution.",
+      text_editing: "Correction de Texte",
+      text_editing_desc: "Optimisez vos rédactions selon les normes académiques.",
+      study_coach: "Coach d'Étude",
+      study_coach_desc: "Génère des plannings d'étude hebdomadaires.",
+      voice_ai: "IA Vocale",
+      voice_ai_desc: "Révisez vos cours oralement en dialoguant avec l'IA.",
+      
+      upload_note: "Télécharger Note",
+      upload_note_desc: "Publiez vos notes de cours pour aider vos camarades.",
+      personal_archive: "Archives Personnelles",
+      personal_archive_desc: "Conservez vos documents téléchargés en lieu sûr.",
+      pdfs: "PDFs",
+      pdfs_desc: "Explorez tous les documents PDF vérifiés partagés sur le campus.",
+      chat: "Discussion",
+      chat_desc: "Messagerie privée et salons de discussion de groupe d'étude.",
+      feedback_placeholder: "Laissez-nous un commentaire, une question ou une idée..."
+    }
+  },
+  ar: {
+    translation: {
+      welcome: "EduTchad مرحبًا بكم في منصة",
+      slogan: "انضم إلى المجتمع التعليمي في تشاد، وشارك ملاحظاتك، وبقَ على اتصال.",
+      login: "تسجيل الدخول",
+      register: "إنشاء حساب",
+      email: "البريد الإلكتروني",
+      password: "كلمة المرور",
+      fullname: "الاسم الكامل",
+      forgot_password: "هل نسيت كلمة السر؟",
+      not_robot: "أنا لست برنامج روبوت",
+      google_login: "الدخول بواسطة جوجل",
+      no_account: "ليس لديك حساب؟",
+      have_account: "لديك حساب بالفعل؟",
+      university_select: "(اختياري) اختر الجامعة",
+      no_school_required: "يمكنك استخدام النظام دون تحديد مؤسسة تعليمية.",
+      profile: "الملف الشخصي",
+      guest: "مستخدم زائر",
+      not_logged_in: "يرجى تسجيل الدخول.",
+      terms: "شروط الاستخدام",
+      privacy: "الخصوصية والبيانات",
+      contact_us: "اتصل بنا",
+      back_home: "العودة للمنصة",
+      tagline: "شبكة حرم جامعي من الجيل الجديد",
+      ai_center: "مدعوم بالذكاء الاصطناعي",
+      student_center: "مركز الطلاب",
+      sub_branding: "منصة التطوير الأكاديمي المدعومة بالذكاء الاصطناعي",
+      close: "إغلاق",
+      send: "إرسال",
+      social_media: "حساباتنا",
+      
+      ai_assistant: "مساعد الدراسة بالذكاء الاصطناعي",
+      ai_assistant_desc: "اسأل الذكاء الاصطناعي أي أسئلة تتعلق بدراستك.",
+      pdf_analysis: "تحليل ملفات PDF",
+      pdf_analysis_desc: "قم برفع مستندات المحاضرات الطويلة لتلخيصها في ثوانٍ.",
+      question_solver: "حل المسائل",
+      question_solver_desc: "ارفع صورة للمسألة وشاهد الحلول التحليلية خطوة بخطوة.",
+      text_editing: "تحرير وتعديل النصوص",
+      text_editing_desc: "حسّن نصوص مقالاتك وواجباتك وفقًا للمعايير الأكاديمية.",
+      study_coach: "موجّه الدراسة",
+      study_coach_desc: "إنشاء خطط دراسية أسبوعية مخصصة واستراتيجيات تحفيزية لك.",
+      voice_ai: "الذكاء الاصطناعي الصوتي",
+      voice_ai_desc: "تحدث مع الذكاء الاصطناعي مباشرة لمراجعة دروسك صوتياً.",
+      
+      upload_note: "رفع ملاحظة",
+      upload_note_desc: "قم برفع ملاحظاتك الدراسية ومشاركتها مع زملائك.",
+      personal_archive: "الأرشيف الشخصي",
+      personal_archive_desc: "احتفظ بجميع المستندات التي قمت برفعها في مكان واحد آمن.",
+      pdfs: "ملفات PDF",
+      pdfs_desc: "تصفح جميع مستندات PDF المعتمدة والمشتركة على مستوى الحرم الجامعي.",
+      chat: "المحادثة",
+      chat_desc: "الرسائل المباشرة الخاصة بين الطلاب والمحادثات الجماعية للدراسة.",
+      feedback_placeholder: "اترك لنا تعليقًا أو سؤالاً أو فكرة..."
+    }
+  }
 };
 
 i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'fr', // Çad'ın resmi dillerinden biri olduğu için varsayılan Fransızca 
-    fallbackLng: 'tr', // Dil bulunamazsa Türkçe'ye dönecek
-    interpolation: {
-      escapeValue: false
-    }
+    lng: 'tr', 
+    fallbackLng: 'en',
+    interpolation: { escapeValue: false }
   });
 
 export default i18n;
