@@ -18,7 +18,7 @@ const SvgIcons = {
   Pdf: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" style={{ flexShrink: 0 }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>,
   Chat: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" style={{ flexShrink: 0 }}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
   
-  // Yeni İletişim İkonları
+  // İletişim İkonları
   ContactUser: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2" style={{ flexShrink: 0, marginRight: '6px', marginLeft: '6px' }}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
   ContactSchool: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2" style={{ flexShrink: 0, marginRight: '6px', marginLeft: '6px' }}><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>,
   ContactDept: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2" style={{ flexShrink: 0, marginRight: '6px', marginLeft: '6px' }}><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
@@ -375,8 +375,8 @@ function App() {
         </div>
       </footer>
 
-      {/* 4. SABİT GÖRÜŞ LAMBASI */}
-      <div style={{ position: 'fixed', bottom: '40px', [appDirection === 'rtl' ? 'left' : 'right']: '40px', zIndex: 100 }}>
+      {/* 4. SABİT GÖRÜŞ LAMBASI (Daha yukarı kaldırıldı: bottom '40px' -> '105px') */}
+      <div style={{ position: 'fixed', bottom: '105px', [appDirection === 'rtl' ? 'left' : 'right']: '40px', zIndex: 100 }}>
         <button onClick={() => setShowFeedbackModal(true)} style={{ width: '54px', height: '54px', borderRadius: '50%', backgroundColor: '#eab308', color: '#000000', border: 'none', cursor: 'pointer', boxShadow: '0 4px 20px rgba(234, 179, 8, 0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px' }}>
           💡
         </button>
@@ -390,7 +390,7 @@ function App() {
             <textarea placeholder={t('feedback_placeholder')} style={{ width: '100%', height: '120px', borderRadius: '8px', border: `1px solid ${theme.border}`, backgroundColor: theme.bg, color: theme.textMain, padding: '10px', boxSizing: 'border-box', resize: 'none' }}></textarea>
             <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
               <button onClick={() => setShowFeedbackModal(false)} style={{ flex: 1, padding: '10px', backgroundColor: theme.iconBg, color: theme.textMain, border: 'none', borderRadius: '6px', cursor: 'pointer' }}>{t('close')}</button>
-              <button onClick={() => setShowFeedbackModal(false)} style={{ flex: 1, padding: '10px', backgroundColor: '#eab308', color: '#000', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}>{t('send')}</button>
+              <button onClick={() => setShowFeedbackModal(false)} style={{ flex: 1, padding: '10px', backgroundColor: '#eab308', color: '#00', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}>{t('send')}</button>
             </div>
           </div>
         </div>
