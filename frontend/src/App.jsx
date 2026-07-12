@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { registerUser, loginUser, chatWithAI } from './api'; 
+import { registerUser, loginUser, chatWithAI, uploadDocument, analyzePDFDocument } from './api'; 
 
 const SvgIcons = {
   Assistant: () => (
@@ -45,11 +45,22 @@ function App() {
   const [authSuccess, setAuthSuccess] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
 
-  // --- ARBİTRER YAPAY ZEKA SOHBET STATE'LERİ ---
-  const [showChatModal, setShowFeedbackModalAI] = useState(false); // AI Modal görünürlüğü
-  const [chatInput, setChatInput] = useState(''); // Kullanıcının yazdığı mesaj
-  const [chatMessages, setChatMessages] = useState([]); // Mesaj geçmişi [{sender: 'user'/'ai', text: '...'}]
-  const [chatLoading, setChatLoading] = useState(false); // Yapay zeka yükleniyor durumu
+  // --- ARBİTRER MODAL STATE'LERİ ---
+  const [showChatModal, setShowChatModal] = useState(false); // AI Asistan Modalı
+  const [showUploadModal, setShowUploadModal] = useState(false); // Not Yükleme Modalı
+  const [showAnalysisModal, setShowAnalysisModal] = useState(false); // PDF Analiz Modalı
+
+  // --- SOHBET VE DOSYA İŞLEM STATE'LERİ ---
+  const [chatInput, setChatInput] = useState('');
+  const [chatMessages, setChatMessages] = useState([]);
+  const [chatLoading, setChatLoading] = useState(false);
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadStatus, setUploadStatus] = useState('');
+  const [uploadedFilename, setUploadedFilename] = useState(''); // Analiz için dosya ismini saklıyoruz
+
+  const [analysisResult, setAnalysisResult] = useState('');
+  const [analysisLoading, setAnalysisLoading] = useState(false);
 
   const changeLanguage = (lng) => { i18n.changeLanguage(lng); };
 
@@ -89,7 +100,7 @@ function App() {
     }
   };
 
-  // --- AI SOHBET GÖNDERME TETİKLEYİCİSİ ---
+  // AI SOHBET TETİKLEYİCİSİ
   const handleSendMessageAI = async (e) => {
     e.preventDefault();
     if (!chatInput.trim()) return;
@@ -100,13 +111,43 @@ function App() {
     setChatLoading(true);
 
     try {
-      // Aktif dili backend'e ileterek çok dilli yanıt alıyoruz
       const data = await chatWithAI(userPrompt, i18n.language);
       setChatMessages((prev) => [...prev, { sender: 'ai', text: data.response }]);
     } catch (error) {
       setChatMessages((prev) => [...prev, { sender: 'ai', text: t('UNKNOWN_ERROR') }]);
     } finally {
       setChatLoading(false);
+    }
+  };
+
+  // NOT/PDF YÜKLEME TETİKLEYİCİSİ
+  const handleFileUpload = async (e) => {
+    e.preventDefault();
+    if (!selectedFile) return;
+
+    setUploadStatus('LOADING');
+    try {
+      const data = await uploadDocument(selectedFile);
+      setUploadStatus('SUCCESS');
+      setUploadedFilename(data.filename); // Analiz modalı için ismi hafızaya at
+    } catch (error) {
+      setUploadStatus('FAILED');
+    }
+  };
+
+  // PDF ANALİZ/ÖZETLEME TETİKLEYİCİSİ
+  const handlePDFAnalysis = async () => {
+    if (!uploadedFilename) return;
+
+    setAnalysisLoading(true);
+    setAnalysisResult('');
+    try {
+      const data = await analyzePDFDocument(uploadedFilename, i18n.language);
+      setAnalysisResult(data.summary);
+    } catch (error) {
+      setAnalysisResult(t('UNKNOWN_ERROR'));
+    } finally {
+      setAnalysisLoading(false);
     }
   };
 
@@ -253,8 +294,7 @@ function App() {
               </div>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '25px' }}>
-                {/* AI DERS ASİSTANI - ARTIK CANLI SOHBET MODALINI AÇIYOR */}
-                <div onClick={() => setShowFeedbackModalAI(true)} style={SlimCardStyle}>
+                <div onClick={() => setShowChatModal(true)} style={SlimCardStyle}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
                     <SvgIcons.Assistant />
                     <h4 style={{ fontSize: '16px', margin: 0, color: theme.textMain }}>{t('ai_assistant')}</h4>
@@ -262,7 +302,8 @@ function App() {
                   <p style={{ color: theme.textMuted, fontSize: '12.5px', margin: 0, lineHeight: '1.4' }}>{t('ai_assistant_desc')}</p>
                 </div>
 
-                <div onClick={() => setShowAuthForm(true)} style={SlimCardStyle}>
+                {/* PDF ANALİZİ KARTI */}
+                <div onClick={() => setShowAnalysisModal(true)} style={SlimCardStyle}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
                     <SvgIcons.Analysis />
                     <h4 style={{ fontSize: '16px', margin: 0, color: theme.textMain }}>{t('pdf_analysis')}</h4>
@@ -314,7 +355,8 @@ function App() {
               </div>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '25px' }}>
-                <div onClick={() => setShowAuthForm(true)} style={SlimCardStyle}>
+                {/* NOT YÜKLE KARTI */}
+                <div onClick={() => setShowUploadModal(true)} style={SlimCardStyle}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
                     <SvgIcons.Upload />
                     <h4 style={{ fontSize: '16px', margin: 0, color: theme.textMain }}>{t('upload_note')}</h4>
@@ -445,7 +487,6 @@ function App() {
 
       {/* 3. GERÇEK SOSYAL MEDYA LİNKLERİ İLE FOOTER */}
       <footer style={{ backgroundColor: theme.navBg, borderTop: `1px solid ${theme.border}`, padding: '40px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', width: '100%', boxSizing: 'border-box', marginTop: '100px' }}>
-        
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '6px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontWeight: 'bold', fontSize: '24px' }}>
             <AbstractLogo />
@@ -483,43 +524,64 @@ function App() {
         </button>
       </div>
 
-      {/* 5. ARBİTRER YAPAY ZEKA CANLI SOHBET MODAL PENCERESİ */}
+      {/* 5. CANLI YAPAY ZEKA SOHBET MODAL PENCERESİ */}
       {showChatModal && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
           <div style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, padding: '25px', borderRadius: '16px', width: '500px', maxWidth: '90%', display: 'flex', flexDirection: 'column', height: '550px', boxSizing: 'border-box' }}>
-            
-            {/* Modal Başlığı */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
               <h3 style={{ margin: 0, color: theme.textMain, display: 'flex', alignItems: 'center', gap: '8px' }}>🤖 {t('ai_assistant')}</h3>
-              <button onClick={() => setShowFeedbackModalAI(false)} style={{ background: 'none', border: 'none', color: theme.textMuted, fontSize: '20px', cursor: 'pointer' }}>✕</button>
+              <button onClick={() => setShowChatModal(false)} style={{ background: 'none', border: 'none', color: theme.textMuted, fontSize: '20px', cursor: 'pointer' }}>✕</button>
             </div>
-
-            {/* Mesaj Akış Alanı (Scrollable) */}
             <div style={{ flex: 1, overflowY: 'auto', backgroundColor: theme.bg, borderRadius: '8px', padding: '15px', display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '15px', border: `1px solid ${theme.border}` }}>
-              {chatMessages.length === 0 && (
-                <div style={{ color: theme.textMuted, textAlign: 'center', marginTop: '140px', fontSize: '14px' }}>
-                  {t('ai_assistant_desc')}
-                </div>
-              )}
+              {chatMessages.length === 0 && <div style={{ color: theme.textMuted, textAlign: 'center', marginTop: '140px', fontSize: '14px' }}>{t('ai_assistant_desc')}</div>}
               {chatMessages.map((msg, idx) => (
-                <div key={idx} style={{ alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start', backgroundColor: msg.sender === 'user' ? theme.primary : theme.iconBg, color: msg.sender === 'user' ? '#fff' : theme.textMain, padding: '10px 14px', borderRadius: msg.sender === 'user' ? '12px 12px 0 12px' : '12px 12px 12px 0', maxWidth: '80%', fontSize: '14px', lineHeight: '1.5' }}>
-                  {msg.text}
-                </div>
+                <div key={idx} style={{ alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start', backgroundColor: msg.sender === 'user' ? theme.primary : theme.iconBg, color: msg.sender === 'user' ? '#fff' : theme.textMain, padding: '10px 14px', borderRadius: msg.sender === 'user' ? '12px 12px 0 12px' : '12px 12px 12px 0', maxWidth: '80%', fontSize: '14px', lineHeight: '1.5' }}>{msg.text}</div>
               ))}
-              {chatLoading && (
-                <div style={{ alignSelf: 'flex-start', backgroundColor: theme.iconBg, color: theme.textMuted, padding: '10px 14px', borderRadius: '12px 12px 12px 0', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span>⏳ EduTchad AI Düşünüyor...</span>
-                </div>
-              )}
+              {chatLoading && <div style={{ alignSelf: 'flex-start', backgroundColor: theme.iconBg, color: theme.textMuted, padding: '10px 14px', borderRadius: '12px 12px 12px 0', fontSize: '13px' }}>⏳ EduTchad AI...</div>}
             </div>
-
-            {/* Mesaj Giriş Alanı */}
             <form onSubmit={handleSendMessageAI} style={{ display: 'flex', gap: '10px' }}>
               <input type="text" value={chatInput} onChange={(e) => setChatInput(e.target.value)} placeholder="Sorunuzu buraya yazın..." style={{ flex: 1, padding: '12px', borderRadius: '8px', border: `1px solid ${theme.border}`, backgroundColor: theme.bg, color: theme.textMain, boxSizing: 'border-box', fontSize: '14px' }} disabled={chatLoading} />
-              <button type="submit" style={{ padding: '0 20px', backgroundColor: theme.primary, color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }} disabled={chatLoading}>
-                {t('send')}
-              </button>
+              <button type="submit" style={{ padding: '0 20px', backgroundColor: theme.primary, color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }} disabled={chatLoading}>{t('send')}</button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* --- YENİ NOT YÜKLEME MODALI --- */}
+      {showUploadModal && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+          <div style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, padding: '30px', borderRadius: '16px', width: '420px', boxSizing: 'border-box', textAlign: 'center' }}>
+            <h3 style={{ margin: '0 0 20px 0', color: theme.textMain }}>📁 {t('upload_note')}</h3>
+            <form onSubmit={handleFileUpload} style={{ display: 'grid', gap: '15px' }}>
+              <input type="file" accept=".pdf,.txt,.doc,.docx" onChange={(e) => setSelectedFile(e.target.files[0])} style={{ color: theme.textMain, fontSize: '14px' }} required />
+              {uploadStatus === 'LOADING' && <div style={{ color: '#eab308', fontSize: '14px' }}>⏳ Dosya sunucuya yükleniyor...</div>}
+              {uploadStatus === 'SUCCESS' && <div style={{ color: '#10b981', fontSize: '14px' }}>✅ Başarıyla yüklendi! PDF Analiz alanından inceleyebilirsiniz.</div>}
+              {uploadStatus === 'FAILED' && <div style={{ color: '#ef4444', fontSize: '14px' }}>❌ Yükleme başarısız oldu.</div>}
+              <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                <button type="button" onClick={() => { setShowUploadModal(false); setUploadStatus(''); }} style={{ flex: 1, padding: '12px', backgroundColor: theme.iconBg, color: theme.textMain, border: 'none', borderRadius: '8px', cursor: 'pointer' }}>{t('close')}</button>
+                <button type="submit" style={{ flex: 1, padding: '12px', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>{t('send')}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* --- YENİ PDF ANALİZİ / ÖZETLEME MODALI --- */}
+      {showAnalysisModal && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+          <div style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, padding: '25px', borderRadius: '16px', width: '550px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
+            <h3 style={{ margin: '0 0 15px 0', color: theme.textMain }}>🔍 {t('pdf_analysis')}</h3>
+            
+            <div style={{ flex: 1, overflowY: 'auto', backgroundColor: theme.bg, borderRadius: '8px', padding: '15px', color: theme.textMain, fontSize: '14px', border: `1px solid ${theme.border}`, minHeight: '200px', marginBottom: '15px', lineHeight: '1.6', textAlign: 'left' }}>
+              {analysisLoading ? "⏳ EduTchad Yapay Zekası dökümanı inceliyor ve özet çıkarıyor..." : (analysisResult || "Özetlemek istediğiniz dökümanı yükledikten sonra aşağıdaki butona basın.")}
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button onClick={() => { setShowAnalysisModal(false); setAnalysisResult(''); }} style={{ flex: 1, padding: '12px', backgroundColor: theme.iconBg, color: theme.textMain, border: 'none', borderRadius: '8px', cursor: 'pointer' }}>{t('close')}</button>
+              <button onClick={handlePDFAnalysis} disabled={!uploadedFilename || analysisLoading} style={{ flex: 2, padding: '12px', backgroundColor: theme.primary, color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', opacity: !uploadedFilename ? 0.5 : 1 }}>
+                🚀 {t('pdf_analysis')}
+              </button>
+            </div>
           </div>
         </div>
       )}
