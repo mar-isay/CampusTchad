@@ -10,35 +10,32 @@ const api = axios.create({
   },
 });
 
-// Kayıt Olma Fonksiyonu
 export const registerUser = async (userData) => {
   try {
     const response = await api.post('/register', userData);
     return response.data;
   } catch (error) {
-    // Sabit Türkçe kaldırıldı, i18n anahtarı fırlatılıyor
     throw error.response?.data?.detail || "REGISTER_FAILED";
   }
 };
 
-// Giriş Yapma Fonksiyonu
 export const loginUser = async (userData) => {
   try {
     const response = await api.post('/login', userData);
     return response.data;
   } catch (error) {
-    // Sabit Türkçe kaldırıldı, i18n anahtarı fırlatılıyor
     throw error.response?.data?.detail || "LOGIN_FAILED";
   }
 };
 
-// Yapay Zeka Sohbet Fonksiyonu
+// Yapay Zeka Sohbet Fonksiyonu (Düzeltildi)
 export const chatWithAI = async (prompt, lang) => {
   try {
+    // API'ye prompt ve lang verilerini query parametresi olarak güvenle gönderiyoruz
     const response = await api.post(`/ai/chat?prompt=${encodeURIComponent(prompt)}&lang=${lang}`);
     return response.data;
   } catch (error) {
-    throw error.response?.data?.detail || "AI_ERROR";
+    throw error.response?.data?.detail || "UNKNOWN_ERROR";
   }
 };
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { registerUser, loginUser } from './api'; 
+import { registerUser, loginUser, chatWithAI } from './api'; 
 
 const SvgIcons = {
   Assistant: () => (
@@ -40,23 +40,21 @@ function App() {
   const [activeModal, setActiveModal] = useState(null); 
   const [robotChecked, setRobotChecked] = useState(false);
 
-  const [formData, setFormData] = useState({
-    fullname: '',
-    email: '',
-    password: '',
-    university: ''
-  });
+  const [formData, setFormData] = useState({ fullname: '', email: '', password: '', university: '' });
   const [authError, setAuthError] = useState('');
   const [authSuccess, setAuthSuccess] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
 
+  // --- ARBİTRER YAPAY ZEKA SOHBET STATE'LERİ ---
+  const [showChatModal, setShowFeedbackModalAI] = useState(false); // AI Modal görünürlüğü
+  const [chatInput, setChatInput] = useState(''); // Kullanıcının yazdığı mesaj
+  const [chatMessages, setChatMessages] = useState([]); // Mesaj geçmişi [{sender: 'user'/'ai', text: '...'}]
+  const [chatLoading, setChatLoading] = useState(false); // Yapay zeka yükleniyor durumu
+
   const changeLanguage = (lng) => { i18n.changeLanguage(lng); };
 
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleAuthSubmit = async (e) => {
@@ -88,6 +86,27 @@ function App() {
       }
     } catch (error) {
       setAuthError(error); 
+    }
+  };
+
+  // --- AI SOHBET GÖNDERME TETİKLEYİCİSİ ---
+  const handleSendMessageAI = async (e) => {
+    e.preventDefault();
+    if (!chatInput.trim()) return;
+
+    const userPrompt = chatInput;
+    setChatMessages((prev) => [...prev, { sender: 'user', text: userPrompt }]);
+    setChatInput('');
+    setChatLoading(true);
+
+    try {
+      // Aktif dili backend'e ileterek çok dilli yanıt alıyoruz
+      const data = await chatWithAI(userPrompt, i18n.language);
+      setChatMessages((prev) => [...prev, { sender: 'ai', text: data.response }]);
+    } catch (error) {
+      setChatMessages((prev) => [...prev, { sender: 'ai', text: t('UNKNOWN_ERROR') }]);
+    } finally {
+      setChatLoading(false);
     }
   };
 
@@ -234,7 +253,8 @@ function App() {
               </div>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '25px' }}>
-                <div onClick={() => setShowAuthForm(true)} style={SlimCardStyle}>
+                {/* AI DERS ASİSTANI - ARTIK CANLI SOHBET MODALINI AÇIYOR */}
+                <div onClick={() => setShowFeedbackModalAI(true)} style={SlimCardStyle}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
                     <SvgIcons.Assistant />
                     <h4 style={{ fontSize: '16px', margin: 0, color: theme.textMain }}>{t('ai_assistant')}</h4>
@@ -451,7 +471,7 @@ function App() {
             <a href="https://www.facebook.com/share/1F5UKFDWDw/?mibextid=wwXIfr" target="_blank" rel="noreferrer" style={{ color: theme.textMuted }}><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/></svg></a>
             <a href="https://x.com/mhtissa6223?s=11" target="_blank" rel="noreferrer" style={{ color: theme.textMuted }}><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
             <a href="https://www.instagram.com/mar_isay_?igsh=czJqMWQ2bGdkYm1z&utm_source=qr" target="_blank" rel="noreferrer" style={{ color: theme.textMuted }}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-            <a href="https://www.linkedin.com/in/issa-abakar-mahamat-568695349?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noreferrer" style={{ color: theme.textMuted }}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+            <a href="https://www.linkedin.com/in/issa-abakar-mahamat-568695349?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noreferrer" style={{ color: theme.textMuted }}><svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/></svg></a>
           </div>
         </div>
       </footer>
@@ -463,7 +483,48 @@ function App() {
         </button>
       </div>
 
-      {/* 5. GÖRÜŞ SOHBET MODAL PENCERESI */}
+      {/* 5. ARBİTRER YAPAY ZEKA CANLI SOHBET MODAL PENCERESİ */}
+      {showChatModal && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+          <div style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, padding: '25px', borderRadius: '16px', width: '500px', maxWidth: '90%', display: 'flex', flexDirection: 'column', height: '550px', boxSizing: 'border-box' }}>
+            
+            {/* Modal Başlığı */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+              <h3 style={{ margin: 0, color: theme.textMain, display: 'flex', alignItems: 'center', gap: '8px' }}>🤖 {t('ai_assistant')}</h3>
+              <button onClick={() => setShowFeedbackModalAI(false)} style={{ background: 'none', border: 'none', color: theme.textMuted, fontSize: '20px', cursor: 'pointer' }}>✕</button>
+            </div>
+
+            {/* Mesaj Akış Alanı (Scrollable) */}
+            <div style={{ flex: 1, overflowY: 'auto', backgroundColor: theme.bg, borderRadius: '8px', padding: '15px', display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '15px', border: `1px solid ${theme.border}` }}>
+              {chatMessages.length === 0 && (
+                <div style={{ color: theme.textMuted, textAlign: 'center', marginTop: '140px', fontSize: '14px' }}>
+                  {t('ai_assistant_desc')}
+                </div>
+              )}
+              {chatMessages.map((msg, idx) => (
+                <div key={idx} style={{ alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start', backgroundColor: msg.sender === 'user' ? theme.primary : theme.iconBg, color: msg.sender === 'user' ? '#fff' : theme.textMain, padding: '10px 14px', borderRadius: msg.sender === 'user' ? '12px 12px 0 12px' : '12px 12px 12px 0', maxWidth: '80%', fontSize: '14px', lineHeight: '1.5' }}>
+                  {msg.text}
+                </div>
+              ))}
+              {chatLoading && (
+                <div style={{ alignSelf: 'flex-start', backgroundColor: theme.iconBg, color: theme.textMuted, padding: '10px 14px', borderRadius: '12px 12px 12px 0', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>⏳ EduTchad AI Düşünüyor...</span>
+                </div>
+              )}
+            </div>
+
+            {/* Mesaj Giriş Alanı */}
+            <form onSubmit={handleSendMessageAI} style={{ display: 'flex', gap: '10px' }}>
+              <input type="text" value={chatInput} onChange={(e) => setChatInput(e.target.value)} placeholder="Sorunuzu buraya yazın..." style={{ flex: 1, padding: '12px', borderRadius: '8px', border: `1px solid ${theme.border}`, backgroundColor: theme.bg, color: theme.textMain, boxSizing: 'border-box', fontSize: '14px' }} disabled={chatLoading} />
+              <button type="submit" style={{ padding: '0 20px', backgroundColor: theme.primary, color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }} disabled={chatLoading}>
+                {t('send')}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* 6. GÖRÜŞ SOHBET MODAL PENCERESI */}
       {showFeedbackModal && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
           <div style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, padding: '30px', borderRadius: '16px', width: '400px', textAlign: appDirection === 'rtl' ? 'right' : 'left', boxSizing: 'border-box' }}>
@@ -477,7 +538,7 @@ function App() {
         </div>
       )}
 
-      {/* 6. DİNAMİK YASAL VE GERÇEK İLETİŞİM BİLGİLERİ MODAL SİSTEMİ */}
+      {/* 7. DİNAMİK YASAL VE GERÇEK İLETİŞİM BİLGİLERİ MODAL SİSTEMİ */}
       {activeModal && (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
           <div style={{ backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, padding: '30px', borderRadius: '16px', width: '460px', textAlign: appDirection === 'rtl' ? 'right' : 'left', boxSizing: 'border-box' }}>
