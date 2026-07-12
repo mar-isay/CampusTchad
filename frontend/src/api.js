@@ -1,7 +1,6 @@
 // frontend/src/api.js
 import axios from 'axios';
 
-// Backend sunucumuzun çalıştığı temel adres
 const API_URL = 'http://127.0.0.1:8000/api';
 
 const api = axios.create({
@@ -17,7 +16,8 @@ export const registerUser = async (userData) => {
     const response = await api.post('/register', userData);
     return response.data;
   } catch (error) {
-    throw error.response?.data?.detail || "Kayıt olurken bir hata oluştu.";
+    // Sabit Türkçe kaldırıldı, i18n anahtarı fırlatılıyor
+    throw error.response?.data?.detail || "REGISTER_FAILED";
   }
 };
 
@@ -27,7 +27,8 @@ export const loginUser = async (userData) => {
     const response = await api.post('/login', userData);
     return response.data;
   } catch (error) {
-    throw error.response?.data?.detail || "Giriş yaparken bir hata oluştu.";
+    // Sabit Türkçe kaldırıldı, i18n anahtarı fırlatılıyor
+    throw error.response?.data?.detail || "LOGIN_FAILED";
   }
 };
 
@@ -37,7 +38,7 @@ export const chatWithAI = async (prompt, lang) => {
     const response = await api.post(`/ai/chat?prompt=${encodeURIComponent(prompt)}&lang=${lang}`);
     return response.data;
   } catch (error) {
-    throw error.response?.data?.detail || "Yapay zeka ile iletişim kurulamadı.";
+    throw error.response?.data?.detail || "AI_ERROR";
   }
 };
 

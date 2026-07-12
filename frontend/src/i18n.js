@@ -77,6 +77,8 @@ const resources = {
       // ÇEVİRİLEBİLİR DİNAMİK HATA MESAJLARI (TR)
       EMAIL_ALREADY_EXISTS: "Bu e-posta adresi zaten sisteme kayıtlı.",
       INVALID_CREDENTIALS: "Geçersiz e-posta adresi veya şifre.",
+      LOGIN_FAILED: "Giriş yaparken bir hata oluştu.",
+      REGISTER_FAILED: "Kayıt olurken bir hata oluştu.",
       UNKNOWN_ERROR: "Beklenmedik bir hata oluştu, lütfen tekrar deneyin.",
       REGISTER_SUCCESS: "Kayıt işlemi başarıyla tamamlandı!",
       LOGIN_SUCCESS: "Giriş başarılı! Yönlendiriliyorsunuz..."
@@ -157,6 +159,8 @@ const resources = {
       // ÇEVİRİLEBİLİR DİNAMİK HATA MESAJLARI (EN)
       EMAIL_ALREADY_EXISTS: "This email address is already registered.",
       INVALID_CREDENTIALS: "Invalid email address or password.",
+      LOGIN_FAILED: "An error occurred during login.",
+      REGISTER_FAILED: "An error occurred during registration.",
       UNKNOWN_ERROR: "An unexpected error occurred, please try again.",
       REGISTER_SUCCESS: "Registration completed successfully!",
       LOGIN_SUCCESS: "Login successful! Redirecting..."
@@ -237,6 +241,8 @@ const resources = {
       // ÇEVİRİLEBİLİR DİNAMİK HATA MESAJLARI (FR)
       EMAIL_ALREADY_EXISTS: "Cette adresse e-mail est déjà enregistrée.",
       INVALID_CREDENTIALS: "Adresse e-mail ou mot de passe invalide.",
+      LOGIN_FAILED: "Une erreur est survenue lors de la connexion.",
+      REGISTER_FAILED: "Une erreur est survenue lors de l'inscription.",
       UNKNOWN_ERROR: "Une erreur inattendue est survenue, veuillez réessayer.",
       REGISTER_SUCCESS: "Inscription complétée avec succès !",
       LOGIN_SUCCESS: "Connexion réussie ! Redirection..."
@@ -245,7 +251,7 @@ const resources = {
   ar: {
     translation: {
       welcome: "EduTchad مرحبًا بكم في منصة",
-      slogan: "انضم إلى المجتمع التعليمي في تشاد، وشارك ملاحظاتك، وبقَ على اتصال.",
+      slogan: "انضم إلى المجتمع التعليمي in تشاد، وشارك ملاحظاتك، وبقَ على اتصال.",
       login: "تسجيل الدخول",
       register: "إنشاء حساب",
       email: "البريد الإلكتروني",
@@ -274,7 +280,7 @@ const resources = {
       social_media: "حساباتنا",
       
       ai_assistant: "مساعد الدراسة بالذكاء الاصطناعي",
-      ai_assistant_desc: "اسأل الذكاء الاصطناعي أي أسئلة تتعلق بدراستك.",
+      ai_assistant_desc: "اسأل الذkاء الاصطناعي أي أسئلة تتعلق بدراستك.",
       pdf_analysis: "تحليل ملفات PDF",
       pdf_analysis_desc: "قم برفع مستندات المحاضرات الطويلة لتلخيصها في ثوانٍ.",
       question_solver: "حل المسائل",
@@ -317,6 +323,8 @@ const resources = {
       // ÇEVİRİLEBİLİR DİNAMİK HATA MESAJLARI (AR)
       EMAIL_ALREADY_EXISTS: "البريد الإلكتروني مسجل بالفعل.",
       INVALID_CREDENTIALS: "البريد الإلكتروني أو كلمة المرور غير صالحة.",
+      LOGIN_FAILED: "حدث خطأ أثناء تسجيل الدخول.",
+      REGISTER_FAILED: "حدث خطأ أثناء التسجيل.",
       UNKNOWN_ERROR: "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى.",
       REGISTER_SUCCESS: "تم التسجيل بنجاح!",
       LOGIN_SUCCESS: "تم تسجيل الدخول بنجاح! جاري التوجيه..."

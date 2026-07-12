@@ -70,7 +70,7 @@ function App() {
           fullname: formData.fullname,
           email: formData.email,
           password: formData.password,
-          university: formData.university || null // HATA BURADAYDI, DÜZELTİLDİ
+          university: formData.university || null
         });
         localStorage.setItem('token', data.access_token);
         setAuthSuccess('REGISTER_SUCCESS'); 
@@ -329,13 +329,12 @@ function App() {
             </div>
           </>
         ) : (
-          /* GİRİŞ / KAYIT FORMU - TAMAMEN ÇEVİRİ DESTEKLİ */
+          /* GİRİŞ / KAYIT FORMU */
           <div style={{ maxWidth: '440px', margin: '30px auto', backgroundColor: theme.cardBg, padding: '40px', borderRadius: '16px', border: `1px solid ${theme.border}`, textAlign: appDirection === 'rtl' ? 'right' : 'left' }}>
             <h3 style={{ textAlign: 'center', marginBottom: '24px', fontSize: '24px', fontWeight: 'bold', color: theme.textMain }}>
               {isRegister ? t('register') : t('login')}
             </h3>
 
-            {/* Mesaj Gösterimleri Artık t() Fonksiyonu İle Dile Duyarlı Yapıldı */}
             {authError && <div style={{ backgroundColor: '#fef2f2', color: '#991b1b', padding: '12px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px', fontWeight: '500', textAlign: 'center' }}>{t(authError)}</div>}
             {authSuccess && <div style={{ backgroundColor: '#ecfdf5', color: '#065f46', padding: '12px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px', fontWeight: '500', textAlign: 'center' }}>{t(authSuccess)}</div>}
             
