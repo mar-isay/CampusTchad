@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { registerUser, loginUser } from './api'; // API fonksiyonlarımızı dahil ettik
+import { registerUser, loginUser } from './api'; 
 
 const SvgIcons = {
   Assistant: () => (
@@ -40,7 +40,6 @@ function App() {
   const [activeModal, setActiveModal] = useState(null); 
   const [robotChecked, setRobotChecked] = useState(false);
 
-  // Form Verileri ve API Durum Yönetimi
   const [formData, setFormData] = useState({
     fullname: '',
     email: '',
@@ -49,7 +48,7 @@ function App() {
   });
   const [authError, setAuthError] = useState('');
   const [authSuccess, setAuthSuccess] = useState('');
-  const [currentUser, setCurrentUser] = useState(null); // Giriş yapan kullanıcının verisi
+  const [currentUser, setCurrentUser] = useState(null);
 
   const changeLanguage = (lng) => { i18n.changeLanguage(lng); };
 
@@ -60,7 +59,6 @@ function App() {
     });
   };
 
-  // FORM GÖNDERME (API BAĞLANTISI) FONKSİYONU
   const handleAuthSubmit = async (e) => {
     e.preventDefault();
     setAuthError('');
@@ -68,30 +66,28 @@ function App() {
 
     try {
       if (isRegister) {
-        // Kayıt Olma İsteyi
         const data = await registerUser({
           fullname: formData.fullname,
           email: formData.email,
           password: formData.password,
-          university: formData.university || null // Okul girilmediyse null gider[cite: 1]
+          university: formData.university || null // HATA BURADAYDI, DÜZELTİLDİ
         });
         localStorage.setItem('token', data.access_token);
-        setAuthSuccess('Kayıt işlemi başarıyla tamamlandı!');
+        setAuthSuccess('REGISTER_SUCCESS'); 
         setCurrentUser({ email: formData.email, fullname: formData.fullname });
         setTimeout(() => setShowAuthForm(false), 1500);
       } else {
-        // Giriş Yapma İsteyi
         const data = await loginUser({
           email: formData.email,
           password: formData.password
         });
         localStorage.setItem('token', data.access_token);
-        setAuthSuccess('Giriş başarılı! Yönlendiriliyorsunuz...');
+        setAuthSuccess('LOGIN_SUCCESS'); 
         setCurrentUser({ email: formData.email, fullname: 'Kullanıcı' });
         setTimeout(() => setShowAuthForm(false), 1500);
       }
     } catch (error) {
-      setAuthError(error);
+      setAuthError(error); 
     }
   };
 
@@ -333,15 +329,15 @@ function App() {
             </div>
           </>
         ) : (
-          /* GİRİŞ / KAYIT FORMU - API ENTEGRASYONLU */
+          /* GİRİŞ / KAYIT FORMU - TAMAMEN ÇEVİRİ DESTEKLİ */
           <div style={{ maxWidth: '440px', margin: '30px auto', backgroundColor: theme.cardBg, padding: '40px', borderRadius: '16px', border: `1px solid ${theme.border}`, textAlign: appDirection === 'rtl' ? 'right' : 'left' }}>
             <h3 style={{ textAlign: 'center', marginBottom: '24px', fontSize: '24px', fontWeight: 'bold', color: theme.textMain }}>
               {isRegister ? t('register') : t('login')}
             </h3>
 
-            {/* Hata ve Başarı Mesaj Gösterimi */}
-            {authError && <div style={{ backgroundColor: '#fef2f2', color: '#991b1b', padding: '12px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px', fontWeight: '500', textAlign: 'center' }}>{authError}</div>}
-            {authSuccess && <div style={{ backgroundColor: '#ecfdf5', color: '#065f46', padding: '12px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px', fontWeight: '500', textAlign: 'center' }}>{authSuccess}</div>}
+            {/* Mesaj Gösterimleri Artık t() Fonksiyonu İle Dile Duyarlı Yapıldı */}
+            {authError && <div style={{ backgroundColor: '#fef2f2', color: '#991b1b', padding: '12px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px', fontWeight: '500', textAlign: 'center' }}>{t(authError)}</div>}
+            {authSuccess && <div style={{ backgroundColor: '#ecfdf5', color: '#065f46', padding: '12px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px', fontWeight: '500', textAlign: 'center' }}>{t(authSuccess)}</div>}
             
             <form onSubmit={handleAuthSubmit} style={{ display: 'grid', gap: '18px' }}>
               {isRegister && (

@@ -71,9 +71,15 @@ const resources = {
       dept: "Bilgisayar Mühendisliği",
       uni_name: "Necmettin Erbakan Üniversitesi",
 
-      // Bildirimler
       notifications: "Bildirimler",
-      no_notifications: "Şu an yeni bildiriminiz yok."
+      no_notifications: "Şu an yeni bildiriminiz yok.",
+
+      // ÇEVİRİLEBİLİR DİNAMİK HATA MESAJLARI (TR)
+      EMAIL_ALREADY_EXISTS: "Bu e-posta adresi zaten sisteme kayıtlı.",
+      INVALID_CREDENTIALS: "Geçersiz e-posta adresi veya şifre.",
+      UNKNOWN_ERROR: "Beklenmedik bir hata oluştu, lütfen tekrar deneyin.",
+      REGISTER_SUCCESS: "Kayıt işlemi başarıyla tamamlandı!",
+      LOGIN_SUCCESS: "Giriş başarılı! Yönlendiriliyorsunuz..."
     }
   },
   en: {
@@ -145,9 +151,15 @@ const resources = {
       dept: "Computer Engineering",
       uni_name: "Necmettin Erbakan University",
 
-      // Bildirimler
       notifications: "Notifications",
-      no_notifications: "You have no new notifications."
+      no_notifications: "You have no new notifications.",
+
+      // ÇEVİRİLEBİLİR DİNAMİK HATA MESAJLARI (EN)
+      EMAIL_ALREADY_EXISTS: "This email address is already registered.",
+      INVALID_CREDENTIALS: "Invalid email address or password.",
+      UNKNOWN_ERROR: "An unexpected error occurred, please try again.",
+      REGISTER_SUCCESS: "Registration completed successfully!",
+      LOGIN_SUCCESS: "Login successful! Redirecting..."
     }
   },
   fr: {
@@ -219,9 +231,15 @@ const resources = {
       dept: "Génie Informatique",
       uni_name: "Université Necmettin Erbakan",
 
-      // Bildirimler
       notifications: "Notifications",
-      no_notifications: "Vous n'avez pas de nouvelles notifications."
+      no_notifications: "Vous n'avez pas de nouvelles notifications.",
+
+      // ÇEVİRİLEBİLİR DİNAMİK HATA MESAJLARI (FR)
+      EMAIL_ALREADY_EXISTS: "Cette adresse e-mail est déjà enregistrée.",
+      INVALID_CREDENTIALS: "Adresse e-mail ou mot de passe invalide.",
+      UNKNOWN_ERROR: "Une erreur inattendue est survenue, veuillez réessayer.",
+      REGISTER_SUCCESS: "Inscription complétée avec succès !",
+      LOGIN_SUCCESS: "Connexion réussie ! Redirection..."
     }
   },
   ar: {
@@ -293,9 +311,15 @@ const resources = {
       dept: "هندسة الكمبيوتر",
       uni_name: "جامعة نجم الدين أربكان",
 
-      // Bildirimler
       notifications: "الإشعارات",
-      no_notifications: "ليس لديك إشعارات جديدة."
+      no_notifications: "ليس لديك إشعارات جديدة.",
+
+      // ÇEVİRİLEBİLİR DİNAMİK HATA MESAJLARI (AR)
+      EMAIL_ALREADY_EXISTS: "البريد الإلكتروني مسجل بالفعل.",
+      INVALID_CREDENTIALS: "البريد الإلكتروني أو كلمة المرور غير صالحة.",
+      UNKNOWN_ERROR: "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى.",
+      REGISTER_SUCCESS: "تم التسجيل بنجاح!",
+      LOGIN_SUCCESS: "تم تسجيل الدخول بنجاح! جاري التوجيه..."
     }
   }
 };
