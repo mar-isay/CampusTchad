@@ -1,16 +1,18 @@
-from sqlalchemy import create_base, create_engine
+# backend/database.py
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from .models import Base
 
-# Yerel PostgreSQL bağlantı adresi (İleride canlıya geçerken güncellenebilir)
-DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/campustchad"
+DATABASE_URL = "sqlite:///./edutchad.db"  # Yerel geliştirme için hızlı SQLite
 
-# Veritabanı motorunu oluşturuyoruz
-engine = create_engine(DATABASE_URL)
-
-# Veritabanı ile konuşacak oturum fabrikası (Session)
+engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-def init_db():
-    # Tabloları veritabanında otomatik olarak oluşturur
-    Base.metadata.create_all(bind=engine)
+Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

@@ -1,19 +1,17 @@
+# backend/schemas.py
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 
-# Kullanıcı kayıt olurken istenecek temel veriler
-class UserCreate(BaseModel):
+class UserRegister(BaseModel):
+    fullname: str
     email: EmailStr
     password: str
-    # Sıfır Zorunluluk İlkesi: Okul zorunlu değil, isteğe bağlı (Optional) yapıyoruz
-    university: Optional[str] = None
+    university: Optional[str] = None  # İsteğe bağlı alan
 
-# Kullanıcı verisi dışarıya (frontend'e) aktarılırken şifreyi gizlemek için kullanılacak şema
-class UserResponse(BaseModel):
-    id: int
+class UserLogin(BaseModel):
     email: EmailStr
-    university: Optional[str] = None
-    is_active: bool
+    password: str
 
-    class Config:
-        from_attributes = True
+class Token(BaseModel):
+    access_token: str
+    token_type: str
